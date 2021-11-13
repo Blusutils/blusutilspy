@@ -1,2 +1,3 @@
 # blusutilspy
-Library with rando functionality
+Library with random functionality
+Releases will be soon...
