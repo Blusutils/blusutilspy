@@ -4,8 +4,8 @@ class switch:
 	def __init__(self, match: object, *, mode: str = 'eq') -> None:
 		"""Modes: eq (==), ne (!=), gt (>), ge (>=), lo (<), le (<=), is (is literal), in (in literal), it (is instance, isinstance func), ic (is subclass, issubclass func)"""
 		self.match = match
-		if mode is None:
-			raise TypeError('NoneType object can not be a mode parameter')
+		if not isinstance(mode, str):
+			raise TypeError(f'\'mode\' parameter only can be a \'{str}\'')
 		self.mode = mode.lower()
 	def __enter__(self) -> None:
 		# fuck
