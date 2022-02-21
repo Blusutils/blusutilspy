@@ -1,4 +1,14 @@
+"""Module with text utilities
+"""
 def intToRoman(n: int) -> str:
+    """Converts an integer to Roman form
+
+    Args:
+        n (int): Integer to convert
+
+    Returns:
+        str: Integer in Roman form
+    """
     return 'M' + intToRoman(n - 1000) if n >= 1000 \
         else ('CM' + intToRoman(n - 900) if n >= 900 \
             else 'D' + intToRoman(n - 500)) if n >= 500  \
@@ -16,12 +26,35 @@ def intToRoman(n: int) -> str:
                                                         # опять лесенка, юххуу
                                                         # кста, свич из либы нафиг :D
 def int_to_roman(n: int) -> str:
-    """An alias for intToRoman"""
+    """An alias to intToRoman
+
+    Args:
+        n (int): Integer to convert
+
+    Returns:
+        str: Integer in Roman form
+    """
     return intToRoman(n)
 
 def capsPercent(txt: str) -> float:
+    """Calculates the percentage of letters written with CapsLock (in uppercase)
+
+    Args:
+        txt (str): Inputted text to calculate
+
+    Returns:
+        float: Percent of uppercase letters
+    """
     return 100/len(txt)*sum([1 for i in txt if i.isupper()])
 
 
 def caps_percent(txt: str) -> float:
+    """An alias for capsPercent
+
+    Args:
+        txt (str): Inputted text to calculate
+
+    Returns:
+        float: Percent of uppercase letters
+    """
     return capsPercent(txt)
