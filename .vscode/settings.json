@@ -1,0 +1,10 @@
+{
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "name": "Cyber",
+            "database": "C:\\Users\\batai_000.HOME-PC\\projects\\CyberPhoneix\\Cyber\\Cogs\\mysqldb.db"
+        }
+    ]
+}

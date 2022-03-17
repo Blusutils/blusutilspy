@@ -1,11 +1,24 @@
-import asyncio
+"""Module with syntax constructions
+"""
 class switch:
 	"""Switch/Case construction for multiple equality based on context managers"""
 	def __init__(self, match: object, *, mode: str = 'eq') -> None:
-		"""Modes: eq (==), ne (!=), gt (>), ge (>=), lo (<), le (<=), is (is literal), in (in literal), it (is instance, isinstance func), ic (is subclass, issubclass func)"""
+		"""Initialize Switch object
+
+		Args:
+			match (Any): Object to check equality
+			mode (str, optional): Mode for equality check. 
+				Available modes: eq (==), ne (!=), gt (>), ge (>=), lo (<), le (<=),  
+				 is (is literal), in (in literal), it (is instance, isinstance func), 
+				ic (is subclass, issubclass func)
+				 Defaults to 'eq' ('equals', == literal).
+
+		Raises:
+			TypeError: provided parameter "mode" isn't a string (i. e. it is NoneType or integer)
+		"""
 		self.match = match
 		if not isinstance(mode, str):
-			raise TypeError(f'\'mode\' parameter only can be a \'{str}\'')
+			raise TypeError(f'parameter must be {str}')
 		self.mode = mode.lower()
 	def __enter__(self) -> None:
 		# fuck
