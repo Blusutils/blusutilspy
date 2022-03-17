@@ -153,11 +153,16 @@ class Line:
         self.__length = 0
         self.__maxlength = length
     def expand(self, value: int):
+<<<<<<< HEAD
         """Changes current max line length.
+=======
+        """Changes current line length.
+>>>>>>> 40ee8b08ab15408e575e65fc74f58399ee7ae98a
 
         Args:
             value (int): Which number should the line be changed.
         """
+<<<<<<< HEAD
         self._Line__maxlength = value
     def expand(self, value: int):
         """Sets current line length.
@@ -165,6 +170,8 @@ class Line:
         Args:
             value (int): Which number should the line be set to.
         """
+=======
+>>>>>>> 40ee8b08ab15408e575e65fc74f58399ee7ae98a
         self._Line__length = value
     def increment(self, value: int):
         """Increments length of line.
