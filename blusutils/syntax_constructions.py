@@ -1,9 +1,5 @@
 """Module with syntax constructions
 """
-<<<<<<< HEAD
-=======
-import asyncio
->>>>>>> 40ee8b08ab15408e575e65fc74f58399ee7ae98a
 class switch:
 	"""Switch/Case construction for multiple equality based on context managers"""
 	def __init__(self, match: object, *, mode: str = 'eq') -> None:
