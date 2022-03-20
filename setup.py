@@ -22,7 +22,7 @@ setuptools.setup(
     ],
     packages=setuptools.find_packages(where='.'),
     python_requires=">=3.9",
-    install_requires = ['selenium', 'rapidjson'],#(reqs:=open('requirements.txt')).readlines(),
+    install_requires = ['rapidjson'],#(reqs:=open('requirements.txt')).readlines(),
     zip_save = False
 )
 #reqs.close()
