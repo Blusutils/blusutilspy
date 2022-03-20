@@ -1,13 +1,10 @@
-"""Nothing to see here..."""
+"""Module for encryptions"""
 
-# def caesarCrypt(inp: str):
-#     pass
+def caesarCrypt(inp: str, pos: int) -> str:
+    pass
 
 # def codingEncrypt(inp: str):
 #     pass
 
 # def codingDecrypt(inp: str):
 #     pass
-
-# def galaxyCrypt(inp: str):
-#     """международный галактический алфавит, ака стол зачарования из майнкрафта"""
