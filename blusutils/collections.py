@@ -159,7 +159,7 @@ class Line:
             value (int): Which number should the line be changed.
         """
         self._Line__maxlength = value
-    def expand(self, value: int):
+    def setlength(self, value: int):
         """Sets current line length.
 
         Args:
