@@ -10,4 +10,4 @@ from .other import *
 from .textutils import *
 # from browser import Browser
 
-__version__ = '0.0.1'
+__version__ = '0.0.1.2'
