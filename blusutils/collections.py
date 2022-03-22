@@ -46,6 +46,18 @@ def deep_merge(source: dict, destination) -> dict:
             destination[key] = value
     return destination
 
+def difflist(list1: list, list2: list) -> list:
+    """Showing difference between two lists
+
+    Args:
+        list1 (list): First list to check difference
+        list2 (list): Second list to check difference
+
+    Returns:
+        list: Difference between list1 and list2
+    """
+    return list(set(list1).symmetric_difference(set(list2)))
+
 class DinfQueue():
     """DinfQueue - Distorted Infinite Queue
     """
