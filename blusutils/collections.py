@@ -28,6 +28,24 @@ def merge(collection: typing.Iterable, *args: typing.Iterable) -> list:
         [collection.append(i) for i in coll]
     return collection
 
+def deep_merge(source: dict, destination) -> dict:
+    """Deep merge for dictionaries
+
+    Args:
+        source (dict): Dict to merge
+        destination (Any): hm...
+
+    Returns:
+        dict: hm...
+    """
+    for key, value in source.items():
+        if isinstance(value, dict):
+            node = destination.setdefault(key, {})
+            deep_merge(value, node)
+        else:
+            destination[key] = value
+    return destination
+
 class DinfQueue():
     """DinfQueue - Distorted Infinite Queue
     """
@@ -190,24 +208,24 @@ class Line:
 
 
 # Bug: getattr goes to recursion
-# class JLJS():
-#     """JSON object like "objects" in JS"""
-#     def __init__(self, based_dict: dict = {}, **kwargs) -> None:
-#         self.JSON = based_dict
-#         if kwargs:
-#             for kw, kv in kwargs:
-#                 self.JSON[kw] = kv
-#     def __getattr__(self, attr):
-#         return self.JSON.get(attr)
-#     def __getitem__(self, attr):
-#         return self.__getattr__(attr)
-#     def __setattr__(self, name: str, value: typing.Any) -> None:
-#         self.JSON.__setattr__(name, value)
-#     def __setitem__(self, name: str, value: typing.Any) -> None:
-#         self.__setattr__(name, value)
-#     def __repr__(self):
-#         return f"<JLJS keys={self.JSON.keys()}>"
-#     def __str__(self):
-#         return rjson.dumps(self.JSON, indent=4, ensure_ascii=False)
-#     def stringify(self):
-#         return self.__str__()
+class JLJS():
+    """JSON object like "objects" in JS"""
+    def __init__(self, based_dict: dict = {}, **kwargs) -> None:
+        self._JSON = based_dict
+        if kwargs:
+            for kw, kv in kwargs:
+                self._JSON[kw] = kv
+    def __getattr__(self, attr):
+        return self._JSON.get(attr, None)
+    def __getitem__(self, attr):
+        return self._JSON.get(attr, None)
+    def __setattr__(self, name: str, value: typing.Any) -> None:
+        self._JSON.__setattr__(name, value)
+    def __setitem__(self, name: str, value: typing.Any) -> None:
+        self.__setattr__(name, value)
+    def __repr__(self):
+        return f"<JLJS keys={self._JSON.keys()}>"
+    def __str__(self):
+        return rjson.dumps(self._JSON, indent=4, ensure_ascii=False)
+    def stringify(self):
+        return self.__str__()
