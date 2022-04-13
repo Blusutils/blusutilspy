@@ -71,7 +71,7 @@ class DinfQueue():
         Raises:
             AttributeError: when *args and 'collection' provides
         """
-        self.collection = []
+        self.collection: list = []
         if args and not collection:
             self.collection = list(args)
         elif collection and not args:
@@ -99,15 +99,15 @@ class DinfQueue():
     def __delitem__(self, key):
         del self.collection[key]
     def __iter__(self):
-        return iter(self.collection)
+        for i in self.collection[self.index:]:
+            yield i
+        #return iter(self.collection)
     def __next__(self):
         try:
             self.index += 1
             return self.collection[self.index-1]
         except IndexError:
             raise StopIteration
-    def __aiter__(self):
-        return iter(self.collection)
     def __anext__(self):
         try:
             self.index += 1
