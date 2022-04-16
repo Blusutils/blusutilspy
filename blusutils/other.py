@@ -1,6 +1,6 @@
 """Module with other type of utils
 """
-import typing, datetime, math, traceback
+import typing, datetime, math, traceback, enum
 def mix_colors(colors: typing.Union[list, tuple, set]) -> int:
 	"""Shitty color mixer for RGB (not RGBA).
 
@@ -35,35 +35,54 @@ def mix_colors(colors: typing.Union[list, tuple, set]) -> int:
 		thd = 0xFF
 	return int(hex(fst)[2:]+hex(scd)[2:]+hex(thd)[2:], 16)
 
-class Metrics:
-    """Enumeration for information quantity units.
-    """
-    Bits = 1
-    Bytes = Bits*8
-    Kilobytes = Bytes*1024
-    Megabytes = Kilobytes*1024
-    Gigabytes = Megabytes*1024
-    Terabytes = Gigabytes*1024
-    Petabytes = Terabytes*1024
+class InformationUnits(enum.Enum):
+	"""Enumeration for information quantity units.
+	"""
+	Bits = 1
+	Bytes = Bits*8
 
-def calculate_downloading_time(upcoming: float, speed: float, metrics: typing.Tuple[int, int] = (Metrics.Bytes, Metrics.Bytes))->typing.Tuple[int, int, int, float]:
-    """Calculate time what you will need to download file(s).
+	Kibibytes = Bytes*1024
+	Mebibytes = Kibibytes*1024
+	Gibibytes = Mebibytes*1024
+	Tebibytes = Gibibytes*1024
+	Pebibytes = Tebibytes*1024
 
-    Args:
-        upcoming (float): Size of upcoming file.
-        speed (float): Your "download" speed of internet connection.
-        metrics (tuple[int, int], optional): A tuple of unit types for the amount of information. The first is the unit for the file size, the second for the speed. Defaults to (Metrics.Bytes, Metrics.Bytes).
+	Kilobytes = Bytes*1000
+	Megabytes = Kilobytes*1000
+	Gigabytes = Megabytes*1000
+	Terabytes = Gigabytes*1000
+	Petabytes = Terabytes*1000
 
-    Returns:
-        tuple[int, int, int, float]: A tuple consisting of the values of hours (integer), minutes (integer), seconds (integer), and the total number of seconds (float).
-    """
-    upcoming = upcoming*metrics[0]
-    speed = speed*metrics[1]
-    seconds = upcoming//speed
-    h = math.floor(seconds/60/60)
-    m = math.floor(((seconds-(h*60*60))/60))
-    s = math.floor(seconds-(h*60*60)-(m*60))
-    return h, m, s, seconds
+	Kibibits = Kibibytes/8
+	Mebibits = Mebibytes/8
+	Gibibits = Gibibytes/8
+	Tebibits = Tebibytes/8
+	Pebibits = Pebibytes/8
+
+	Kilobits = Kilobytes/8
+	Megabits = Megabytes/8
+	Gigabits = Megabits/8
+	Terabits = Gigabytes/8
+	Petabits = Terabytes/8
+
+def calculate_downloading_time(upcoming: float, speed: float, metrics: typing.Tuple[int, int] = (InformationUnits.Bytes, InformationUnits.Bytes))->typing.Tuple[int, int, int, float]:
+	"""Calculate time what you will need to download file(s).
+
+	Args:
+		upcoming (float): Size of upcoming file.
+		speed (float): Your "download" speed of internet connection.
+		metrics (tuple[int, int], optional): A tuple of unit types for the amount of information. The first is the unit for the file size, the second for the speed. Defaults to (Metrics.Bytes, Metrics.Bytes).
+
+	Returns:
+		tuple[int, int, int, float]: A tuple consisting of the values of hours (integer), minutes (integer), seconds (integer), and the total number of seconds (float).
+	"""
+	upcoming = upcoming*metrics[0]
+	speed = speed*metrics[1]
+	seconds = upcoming//speed
+	h = math.floor(seconds/60/60)
+	m = math.floor(((seconds-(h*60*60))/60))
+	s = math.floor(seconds-(h*60*60)-(m*60))
+	return h, m, s, seconds
 
 def anywhere_raise(exc: Exception):
 	"""Raises an exception in any place. It may be needed in ternary line (val if condition else __raise__) or in any other place where "raise" can't be used.
