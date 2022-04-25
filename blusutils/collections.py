@@ -75,9 +75,17 @@ class DinfQueue():
     def next(self):
         try:
             self.index += 1
-            return self.collection[self.index-1]
+            return self.collection[self.index]
         except IndexError:
-            raise QueueEnded
+            self.index -= 1
+            raise QueueEnded(f'the queue was ended. Last index: {self.index}')
+    def previous(self):
+        try:
+            self.index -= 1
+            return self.collection[self.index]
+        except IndexError:
+            self.index += 1
+            raise QueueAtStart('the queue reached start of self')
     def append(self, obj: object):
         """Appends object to the end of collection.
 

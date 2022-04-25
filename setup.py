@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="blusutils",
-    version="0.0.1.2",
+    version="0.0.2.1",
     author="Blusutils",
     author_email="contact@blusutils.net",
     description="Library with random functionality.",
