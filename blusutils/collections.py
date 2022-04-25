@@ -2,31 +2,7 @@
 """
 import random, typing
 import rapidjson as rjson
-
-# deprecated: random.shuffle already exists
-# def shuffle(collection: typing.Iterable, /) -> typing.Iterable:
-#     result = []
-#     copied = collection.copy()
-#     while copied:
-#         selected = random.chioce(copied)
-#         copied.remove(selected)
-#         result.append(selected)
-#     return result
-
-def merge(collection: typing.Iterable, *args: typing.Iterable) -> list:
-    """Merges an iterable collections
-
-    Args:
-        collection (typing.Iterable): Base collection
-        *args (typing.Iterable): Another collections what appends to base collection
-
-    Returns:
-        list: merged collection (list)
-    """
-    collection = list(collection)
-    for coll in args:
-        [collection.append(i) for i in coll]
-    return collection
+from .errors import *
 
 def deep_merge(source: dict, destination) -> dict:
     """Deep merge for dictionaries
@@ -72,14 +48,8 @@ class DinfQueue():
             AttributeError: when *args and 'collection' provides
         """
         self.collection: list = []
-        if args and not collection:
-            self.collection = list(args)
-        elif collection and not args:
-            self.collection = collection
-        elif not collection and not args:
-            pass
-        else:
-            raise AttributeError('args and collection provided')
+        self.collection.extend(args)
+        self.collection.extend(collection)
         self.index = 0
     def __repr__(self):
         return f'DinfQueue({str(self.collection)})'
@@ -102,18 +72,12 @@ class DinfQueue():
         for i in self.collection[self.index:]:
             yield i
         #return iter(self.collection)
-    def __next__(self):
+    def next(self):
         try:
             self.index += 1
             return self.collection[self.index-1]
         except IndexError:
-            raise StopIteration
-    def __anext__(self):
-        try:
-            self.index += 1
-            return self.collection[self.index-1]
-        except IndexError:
-            raise StopAsyncIteration
+            raise QueueEnded
     def append(self, obj: object):
         """Appends object to the end of collection.
 
@@ -121,6 +85,13 @@ class DinfQueue():
             obj (object): Object to append
         """
         self.collection.append(obj)
+    def extend(self, obj: typing.Iterable):
+        """Extends collection from iterable.
+
+        Args:
+            obj (object): Object to append
+        """
+        self.collection.extend(obj)
     def shuffle(self):
         """Shuffles collection and replaces that.
 

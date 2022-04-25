@@ -1,0 +1,1 @@
+class QueueEnded(Exception): pass

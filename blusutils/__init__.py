@@ -8,6 +8,7 @@ from .syntax_constructions import *
 from .crypto import *
 from .other import *
 from .textutils import *
+import errors
 # from browser import Browser
 
 __version__ = '0.0.1.2'

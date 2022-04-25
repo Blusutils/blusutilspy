@@ -1,6 +1,7 @@
 """Module with other type of utils
 """
 import typing, datetime, math, traceback, enum
+
 def mix_colors(colors: typing.Union[list, tuple, set]) -> int:
 	"""Shitty color mixer for RGB (not RGBA).
 
@@ -13,7 +14,7 @@ def mix_colors(colors: typing.Union[list, tuple, set]) -> int:
 	Returns:
 		int: mixed color (withount channels, you can convert to hex-like string using hex() and parse color channels)
 	"""
-	if not type(colors) in [list, tuple, set]: raise TypeError(f"{type(colors)} not an iterable collection")
+	if not type(colors) in [list, tuple, set]: raise TypeError(f"{type(colors)} is not an {list}, {tuple} or {set}")
 	fst = 0x0
 	scd = 0x0
 	thd = 0x0
@@ -27,12 +28,9 @@ def mix_colors(colors: typing.Union[list, tuple, set]) -> int:
 		if thd < 0xFF:
 			clr3 = hex(color)[6:8] if len(color)>6 else color[6:8] 
 			thd = int(clr3, 16) + thd
-	if fst > 0xFF:
-		fst = 0xFF
-	if scd >  0xFF:
-		scd = 0xFF
-	if thd > 0xFF:
-		thd = 0xFF
+	if fst > 0xFF: fst = 0xFF
+	if scd >  0xFF: scd = 0xFF
+	if thd > 0xFF: thd = 0xFF
 	return int(hex(fst)[2:]+hex(scd)[2:]+hex(thd)[2:], 16)
 
 class InformationUnits(enum.Enum):
@@ -93,7 +91,7 @@ def anywhere_raise(exc: Exception):
 	Raises:
 		exc: Provided exception.
 	"""
-	raise exc
+	raise exc # genius
 
 def safe_raise(exc: Exception):
 	"""Safetly raises an exception. It may be needed when you want to warn user, but not to stop code. Cannot be catched in "try/except".
@@ -104,5 +102,5 @@ def safe_raise(exc: Exception):
 	Returns:
 		Exception: Passed exception.
 	"""
-	print(traceback.format_exc(exc))
+	print(traceback.format_exc(exc)) # also genius
 	return exc
