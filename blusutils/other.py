@@ -1,6 +1,10 @@
 """Module with other type of utils
 """
-import typing, datetime, math, traceback, enum
+import typing
+import datetime
+import math
+import traceback
+import enum
 
 def mix_colors(colors: typing.Union[list, tuple, set]) -> int:
 	"""Shitty color mixer for RGB (not RGBA).
