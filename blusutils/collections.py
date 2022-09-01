@@ -1,18 +1,21 @@
 """Module with collections
 """
 import random, typing
-import rapidjson as rjson
+try:
+    import ujson as json
+except ImportError:
+    import json
 from .errors import *
 
-def deep_merge(source: dict, destination) -> dict:
+def deep_merge(source: dict, destination: dict = {}) -> dict:
     """Deep merge for dictionaries
-
+    
     Args:
         source (dict): Dict to merge
-        destination (Any): hm...
-
+        dest (dict, optional): Destionation dict
+        
     Returns:
-        dict: hm...
+        dict: merged dict
     """
     for key, value in source.items():
         if isinstance(value, dict):
@@ -23,7 +26,7 @@ def deep_merge(source: dict, destination) -> dict:
     return destination
 
 def difflist(list1: list, list2: list) -> list:
-    """Showing difference between two lists
+    """Shows difference between two lists
 
     Args:
         list1 (list): First list to check difference
@@ -198,25 +201,34 @@ class Line:
         return a1+a2
 
 
-# Bug: getattr goes to recursion
-# class JLJS():
-#     """JSON object like "objects" in JS"""
-#     def __init__(self, based_dict: dict = {}, **kwargs) -> None:
-#         self._JSON = based_dict
-#         if kwargs:
-#             for kw, kv in kwargs:
-#                 self._JSON[kw] = kv
-#     def __getattr__(self, attr):
-#         return self._JSON.get(attr, None)
-#     def __getitem__(self, attr):
-#         return self._JSON.get(attr, None)
-#     def __setattr__(self, name: str, value: typing.Any) -> None:
-#         self._JSON.__setattr__(name, value)
-#     def __setitem__(self, name: str, value: typing.Any) -> None:
-#         self.__setattr__(name, value)
-#     def __repr__(self):
-#         return f"<JLJS keys={self._JSON.keys()}>"
-#     def __str__(self):
-#         return rjson.dumps(self._JSON, indent=4, ensure_ascii=False)
-#     def stringify(self):
-#         return self.__str__()
+class JLJS():
+    """JSON object like "objects" in JS"""
+    _jsondict = {}
+    def __init__(self, based_dict: dict = {}, **kwargs) -> None:
+        if kwargs:
+            for kw, kv in kwargs.items():
+                if not isinstance(kv, dict):
+                    based_dict[kw] = kv
+                else:
+                    based_dict[kw] = JLJS(based_dict=kv)
+        self._jsondict = based_dict
+    def __getattr__(self, key):
+        return self._jsondict.get(key, None)
+    def __getitem__(self, attr):
+        return self._jsondict.get(attr, None)
+    def __setattr__(self, name: str, value: typing.Any) -> None:
+        if name == "_jsondict":
+            for k, v in value.items():
+                self._jsondict[k] = v
+        else:
+            self._jsondict[name] = value
+    def __setitem__(self, name: str, value: typing.Any) -> None:
+        self.__setattr__(name, value)
+    def __repr__(self):
+        return f"<JLJS keys={self._jsondict.keys()}>"
+    def __str__(self) -> str:
+        return json.dumps(self._jsondict, indent=4, ensure_ascii=False)
+    def stringify(self) -> str:
+        return json.dumps(self._jsondict, ensure_ascii=False)
+    def to_dict(self) -> dict:
+        return self._jsondict
