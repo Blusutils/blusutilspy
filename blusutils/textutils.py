@@ -14,7 +14,7 @@ def int_to_roman(n: int) -> str:
             else 'D' + int_to_roman(n - 500)) if n >= 500  \
                 else ('CD' + int_to_roman(n - 400) if n >= 400  \
                     else 'C' + int_to_roman(n - 100)) if n >= 100  \
-                        else ('XC' + intToRoman(n - 90) if n >= 90  \
+                        else ('XC' + int_to_roman(n - 90) if n >= 90  \
                             else 'L' + int_to_roman(n - 50)) if n >= 50  \
                                 else ('XL' + int_to_roman(n - 40) if n >= 40  \
                                     else 'X' + int_to_roman(n - 10)) if n >= 10  \
@@ -113,5 +113,5 @@ def ru_en_transliterate(inp: str) -> str:
                         .replace('Ю', 'Yu')\
                         .replace('Я', 'Ya')
 
-# def galaxyCrypt(inp: str):
+# def galaxy_crypt(inp: str):
 #     """международный галактический алфавит, ака стол зачарования из майнкрафта"""
